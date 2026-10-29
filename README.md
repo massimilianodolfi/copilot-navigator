@@ -4,8 +4,7 @@ Copilot Navigator is a lightweight browser extension that adds a lateral convers
 
 ## Demo
 
-assets/image001.png
-
+![Copilot Navigator showing the conversation sidebar](assets/image001.png)
 ## Features
 
 - Automatically detects and lists your prompts
