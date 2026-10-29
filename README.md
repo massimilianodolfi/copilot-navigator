@@ -2,6 +2,10 @@
 
 Copilot Navigator is a lightweight browser extension that adds a lateral conversation index to Microsoft Copilot. It lists your prompts and lets you jump smoothly back to any question in a long conversation.
 
+## Demo
+
+assets/image001.png
+
 ## Features
 
 - Automatically detects and lists your prompts
