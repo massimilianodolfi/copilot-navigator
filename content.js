@@ -1,4 +1,3 @@
-// Main IIFE (Immediately Invoked Function Expression) that initializes the Copilot Conversation Navigator
 (() => {
   // Constant identifier for the navigator panel element
   const PANEL_ID = "copilot-conversation-navigator";
@@ -95,69 +94,42 @@
     return panel;
   }
 
-  /**
-   * Rebuilds the navigator panel with current prompts
-   * This function finds prompts, compares with previous state, and updates the UI
-   */
   function rebuild() {
-    // Ensure the panel exists
     const panel = ensurePanel();
-    // Get references to list and status elements within the panel
     const list = panel.querySelector("#ccn-list");
     const status = panel.querySelector("#ccn-status");
-    // Find all prompt candidates in the document
     const prompts = findPromptCandidates();
-    // Create a signature based on current prompts for optimization
     const signature = prompts.map(p => normalize(p.innerText || p.textContent)).join("|");
-    
-    // If signature hasn't changed, no need to rebuild (optimization)
     if (signature === lastSignature) return;
     lastSignature = signature;
 
-    // Clear the existing list content
     list.replaceChildren();
-    // Update status text with number of prompts found
     status.textContent = prompts.length
       ? `${prompts.length} prompt${prompts.length === 1 ? "" : "s"}`
       : "No prompts detected";
 
-    // Create a button for each prompt
     prompts.forEach((prompt, index) => {
       const text = normalize(prompt.innerText || prompt.textContent);
       const button = document.createElement("button");
       button.className = "ccn-item";
       button.textContent = `${index + 1}. ${shortTitle(text)}`;
       button.title = text;
-      
-      // Add click event to scroll to and highlight the prompt
       button.addEventListener("click", () => {
         prompt.scrollIntoView({ behavior: "smooth", block: "center" });
         prompt.classList.add("ccn-highlight");
         setTimeout(() => prompt.classList.remove("ccn-highlight"), 1400);
       });
-      
-      // Add the button to the list
       list.appendChild(button);
     });
   }
 
-  // Timer variable for debouncing rebuild operations
   let timer;
-  
-  /**
-   * MutationObserver to watch for DOM changes and trigger rebuild when needed
-   * This observer watches for additions/removals of elements in the document body
-   * and triggers a rebuild after a short delay (300ms) to avoid excessive updates
-   */
   const observer = new MutationObserver(() => {
     clearTimeout(timer);
     timer = setTimeout(rebuild, 300);
   });
 
-  // Initialize the panel and build it once on startup
   ensurePanel();
   rebuild();
-  
-  // Start observing the document body for changes
   observer.observe(document.body, { childList: true, subtree: true });
 })();

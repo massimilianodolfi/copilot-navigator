@@ -3,6 +3,11 @@
   "name": "Copilot Conversation Navigator",
   "version": "0.1.0",
   "description": "Adds a simple prompt navigator to Microsoft Copilot conversations.",
+  "icons": {
+    "16": "assets/image_10080601.jpg",
+    "48": "assets/image_10080601.jpg",
+    "128": "assets/image_10080601.jpg"
+  },
   "content_scripts": [
     {
       "matches": ["https://m365.cloud.microsoft/*", "https://copilot.microsoft.com/*"],
